@@ -2,13 +2,14 @@
 
 #include "Notation.hpp"
 
-#include <string_view>
+#include <string>
+#include <queue>
 
 namespace MathExpression
 {
     template<Notation>
     __interface IExprExecuter
     {
-        virtual double execute_expr_according_notation(std::string_view expr) const = 0;
+        virtual double execute_expr_according_notation(std::queue<std::string> const& expr) const = 0;
     };
 }
