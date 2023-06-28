@@ -2,26 +2,33 @@
 
 #include <stack>
 #include <map>
-#include "IConverterRPN.hpp"
+#include "IExprConverter.hpp"
+#include "Notation.hpp"
 #include "Operator.hpp"
 
-
-class ConverterRPN : IConverterRPN
+namespace Calculator
 {
-public:
+    class ConverterRPN : public MathExpression::IExprConverter<MathExpression::Notation::RPN>
+    {
+    public:
 
-    ConverterRPN() = default;
-    ConverterRPN(ConverterRPN const&) = delete;
-    ConverterRPN(ConverterRPN&&) = delete;
+        ConverterRPN() = default;
+        ConverterRPN(ConverterRPN const&) = delete;
+        ConverterRPN(ConverterRPN&&) = delete;
 
-    ConverterRPN& operator=(ConverterRPN const&) = delete;
-    ConverterRPN& operator=(ConverterRPN&&) = delete;
+        ConverterRPN& operator=(ConverterRPN const&) = delete;
+        ConverterRPN& operator=(ConverterRPN&&) = delete;
 
-    virtual std::string convert_expr_to_RPN(std::string_view expr) const override;
+        virtual std::queue<std::string> convert_expr_with_notation(std::string_view expr) const override;
 
-private:
+    private:
 
-    std::stack<Operator> operators{ };
-    static std::map<Operator, int> const precedences;
-    static std::map<Operator, Associativity> const associativities;
-};
+        static bool is_operator(std::string_view token);
+        static MathExpression::Operator parse_operator(std::string_view token);
+        static std::string to_string(MathExpression::Operator const& o);
+
+        static std::stack<MathExpression::Operator> operators;
+        static std::map<MathExpression::Operator const, int const> const precedences;
+        static std::map<MathExpression::Operator const, MathExpression::Associativity const> const associativities;
+    };
+}

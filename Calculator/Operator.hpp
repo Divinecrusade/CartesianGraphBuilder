@@ -1,15 +1,20 @@
 #pragma once
 
-enum class Operator : char
+namespace MathExpression
 {
-    pow = '^',
-    plus = '+',
-    minus = '-',
-    mul = '*',
-    div = '/'
-};
+    enum class Operator : char
+    {
+        pow = '^',
+        mul = '*',
+        div = '/',
+        plus = '+',
+        minus = '-',
+        left_parenthesis = '(',
+        right_parenthesis = ')'
+    };
 
-enum class Associativity
-{
-    left, right
-};
+    enum class Associativity
+    {
+        left, right
+    };
+}
