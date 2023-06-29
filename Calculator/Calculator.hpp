@@ -7,6 +7,8 @@
 #include "Operator.hpp"
 
 #include <memory>
+#include <cassert>
+#include <iterator>
 
 namespace MathExprCalculator
 {
@@ -27,28 +29,10 @@ namespace MathExprCalculator
         Calculator& operator=(Calculator const&) = delete;
         Calculator& operator=(Calculator&&) = delete;
 
+        ~Calculator() = default;
+
         virtual double calculate(std::string_view expr) const override
         {
-            /*assert(bool[expr, &available_symbols]() = > {
-                for (char const& c1 : expr)
-                {
-                    bool correct_symbol{ false };
-
-                    for (char const& c2 : available_symbols)
-                    {
-                        if (c1 == c2)
-                        {
-                            correct_symbol = true;
-                            break;
-                        }
-                    }
-
-                    if (!correct_symbol) return false;
-                }
-
-                return true;
-            }());*/
-
             char const delimeter{ converter->get_delimeter() };
             bool prev_char_is_operator{ false };
 
