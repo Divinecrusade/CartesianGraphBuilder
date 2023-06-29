@@ -2,7 +2,10 @@
 
 #include <string_view>
 
-__interface ICalculator
+namespace Calculator
 {
-    virtual double calculate(std::string_view expr) const = 0;
-};
+    __interface ICalculator
+    {
+        virtual double calculate(std::string_view expr) const = 0;
+    };
+}
