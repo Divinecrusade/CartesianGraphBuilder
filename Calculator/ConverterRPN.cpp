@@ -5,18 +5,18 @@
 
 namespace Calculator
 {
-    std::stack<MathExpression::Operator> ConverterRPN::operators{ };
     std::map<MathExpression::Operator const, int const> const ConverterRPN::precedences{ { MathExpression::Operator::pow, 4 }, { MathExpression::Operator::mul, 3 },
-                                                                             { MathExpression::Operator::div, 3 }, { MathExpression::Operator::plus, 2 }, 
-                                                                             { MathExpression::Operator::minus, 2 } };
+                                                                                         { MathExpression::Operator::div, 3 }, { MathExpression::Operator::plus, 2 }, 
+                                                                                         { MathExpression::Operator::minus, 2 } };
     std::map<MathExpression::Operator const, MathExpression::Associativity const> const ConverterRPN::associativities{ { MathExpression::Operator::pow, MathExpression::Associativity::right }, { MathExpression::Operator::mul, MathExpression::Associativity::left },
-                                                                                                           { MathExpression::Operator::div, MathExpression::Associativity::left }, { MathExpression::Operator::plus, MathExpression::Associativity::left },
-                                                                                                           { MathExpression::Operator::minus, MathExpression::Associativity::left } };
+                                                                                                                       { MathExpression::Operator::div, MathExpression::Associativity::left }, { MathExpression::Operator::plus, MathExpression::Associativity::left },
+                                                                                                                       { MathExpression::Operator::minus, MathExpression::Associativity::left } };
+
+    ConverterRPN::ConverterRPN(char del) : DELIMETER{ del } { }
 
     std::queue<std::string> ConverterRPN::convert_expr_with_notation(std::string_view expr) const
     {
-        static constexpr char DELIMETER{ ' ' };
-
+        std::stack<MathExpression::Operator> operators{ };
         std::queue<std::string> result{ };
     
         std::vector<std::string> tokens{ };
