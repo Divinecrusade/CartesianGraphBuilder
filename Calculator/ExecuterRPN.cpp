@@ -6,12 +6,11 @@
 #include <cassert>
 #include <cmath>
 
-namespace Calculator
+namespace MathExprCalculator
 {
-    ExecuterRPN::ExecuterRPN(char del) : DELIMETER{ del } { }
-
     double ExecuterRPN::execute_expr_according_notation(std::queue<std::string> const& expr) const
     {
+        static constexpr char DELIMETER{ ' ' };
         std::stack<double> operands{ };
         std::string expr_line{  };
 
