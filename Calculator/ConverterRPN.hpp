@@ -20,6 +20,7 @@ namespace MathExprCalculator
         ConverterRPN& operator=(ConverterRPN&&) = delete;
 
         virtual std::queue<std::string> convert_expr_with_notation(std::string_view expr) const override;
+        virtual char get_delimeter() const override;
 
     private:
         
