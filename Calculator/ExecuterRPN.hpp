@@ -9,7 +9,7 @@ namespace Calculator
     {
     public:
 
-        ExecuterRPN() = default;
+        explicit ExecuterRPN(char del = ' ');
         ExecuterRPN(ExecuterRPN const&) = delete;
         ExecuterRPN(ExecuterRPN&&) = delete;
 
@@ -20,6 +20,6 @@ namespace Calculator
 
     private:
 
-        static std::stack<double> operands; 
+        char const DELIMETER;
     };
 }
