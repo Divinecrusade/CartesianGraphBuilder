@@ -109,20 +109,20 @@ namespace MathExprCalculator
         return DELIMETER;
     }
 
-    bool ConverterRPN::is_operator(std::string_view token)
+    bool ConverterRPN::is_operator(std::string_view token) noexcept
     {
         if (token.length() > 1 || (token[0] >= '0' && token[0] <= '9')) return false;
         else return true;
     }
 
-    MathExpression::Operator ConverterRPN::parse_operator(std::string_view token)
+    MathExpression::Operator ConverterRPN::parse_operator(std::string_view token) noexcept
     {
         assert(is_operator(token));
 
         return static_cast<MathExpression::Operator>(token[0]);
     }
 
-    std::string ConverterRPN::to_string(MathExpression::Operator const& o)
+    std::string ConverterRPN::to_string(MathExpression::Operator const& o) noexcept
     {
         return std::string{ static_cast<char>(o) };
     }
