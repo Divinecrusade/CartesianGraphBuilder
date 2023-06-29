@@ -3,7 +3,7 @@
 #include <vector>
 #include <cassert>
 
-namespace Calculator
+namespace MathExprCalculator
 {
     std::map<MathExpression::Operator const, int const> const ConverterRPN::precedences{ { MathExpression::Operator::pow, 4 }, { MathExpression::Operator::mul, 3 },
                                                                                          { MathExpression::Operator::div, 3 }, { MathExpression::Operator::plus, 2 }, 
