@@ -21,6 +21,12 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="..\Calculator\ConverterRPN.cpp">
+      <Filter>Calculator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Calculator\ExecuterRPN.cpp">
+      <Filter>Calculator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -28,6 +34,15 @@
     </ClInclude>
     <ClInclude Include="..\Calculator\Calculator.hpp">
       <Filter>Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Calculator\ConverterRPN.hpp">
+      <Filter>Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Calculator\ExecuterRPN.hpp">
+      <Filter>Calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="Validater.hpp">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
