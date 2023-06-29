@@ -125,9 +125,9 @@ namespace MathExprCalculator
 
                     break;
 
-                    //default:
+                    default:
 
-                        //throw std::exception{ "Bad RPN notation expression" };
+                        throw std::exception{ "Bad RPN notation expression" };
                 }
 
                 operands.push(operation_result);

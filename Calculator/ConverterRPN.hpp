@@ -19,6 +19,8 @@ namespace MathExprCalculator
         ConverterRPN& operator=(ConverterRPN const&) = delete;
         ConverterRPN& operator=(ConverterRPN&&) = delete;
 
+        ~ConverterRPN() = default;
+
         virtual std::queue<std::string> convert_expr_with_notation(std::string_view expr) const override;
         virtual char get_delimeter() const override;
 
@@ -26,9 +28,9 @@ namespace MathExprCalculator
         
         char const DELIMETER;
 
-        static bool is_operator(std::string_view token);
-        static MathExpression::Operator parse_operator(std::string_view token);
-        static std::string to_string(MathExpression::Operator const& o);
+        static bool is_operator(std::string_view token) noexcept;
+        static MathExpression::Operator parse_operator(std::string_view token) noexcept;
+        static std::string to_string(MathExpression::Operator const& o) noexcept;
 
         static std::map<MathExpression::Operator const, int const> const precedences;
         static std::map<MathExpression::Operator const, MathExpression::Associativity const> const associativities;
