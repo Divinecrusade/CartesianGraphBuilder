@@ -3,13 +3,13 @@
 #include "IExprExecuter.hpp"
 #include <stack>
 
-namespace Calculator
+namespace MathExprCalculator
 {
     class ExecuterRPN : public MathExpression::IExprExecuter<MathExpression::Notation::RPN>
     {
     public:
 
-        explicit ExecuterRPN(char del = ' ');
+        ExecuterRPN() = default;
         ExecuterRPN(ExecuterRPN const&) = delete;
         ExecuterRPN(ExecuterRPN&&) = delete;
 
@@ -17,9 +17,5 @@ namespace Calculator
         ExecuterRPN& operator=(ExecuterRPN&&) = delete;
 
         virtual double execute_expr_according_notation(std::queue<std::string> const& expr) const override;
-
-    private:
-
-        char const DELIMETER;
     };
 }
