@@ -2,7 +2,7 @@
 
 #include <string_view>
 
-namespace Calculator
+namespace MathExprCalculator
 {
     __interface ICalculator
     {
