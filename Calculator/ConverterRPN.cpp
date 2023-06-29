@@ -18,7 +18,7 @@ namespace MathExprCalculator
     {
         std::stack<MathExpression::Operator> operators{ };
         std::queue<std::string> result{ };
-    
+
         std::vector<std::string> tokens{ };
         size_t last_space_pos{ 0 };
         size_t space_pos{ expr.find(DELIMETER, last_space_pos) };
@@ -87,6 +87,9 @@ namespace MathExprCalculator
             }
         }
         
+        auto s = result.size();
+
+
         while (!operators.empty())
         {
             auto const& o{ operators.top() };
@@ -99,6 +102,11 @@ namespace MathExprCalculator
         }
 
         return result;
+    }
+
+    char ConverterRPN::get_delimeter() const
+    {
+        return DELIMETER;
     }
 
     bool ConverterRPN::is_operator(std::string_view token)
