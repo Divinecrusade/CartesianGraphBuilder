@@ -1,12 +1,15 @@
 #pragma once
 
-#include "..\Calculator\Calculator.hpp"
+#include "..\Calculator\Operator.hpp"
+#include <string>
+#include <utility>
 
 namespace GUIApplication
 {
     static struct Validater
     {        
-       static constexpr char available_symbols[] { 'x', 'e' };
+       static std::pair<size_t, char const* const> const calculator_symbols;
+       static std::pair<size_t, char const* const> const preprocessor_symbols;
 
        static bool validate(std::string const& expr)
        {
@@ -14,19 +17,19 @@ namespace GUIApplication
 
             enum TokenType
             {
-                nan, number, math_operator, special
+                nan, number, math_operator, preprocessor
             };
 
             TokenType prev_char{ nan };
             bool prev_char_is_parenthesis{ false };
 
-            for (char const c1 : expr)
+            for (char const c : expr)
             {
                 bool calculator_symbol{ false };
-                bool special_symbol{ false };
-                for (char const c2 : MathExprCalculator::Calculator<MathExpression::Notation::RPN>::available_symbols)
+                bool preprocessor_symbol{ false };
+                for (size_t i{ 0 }; i != calculator_symbols.first; ++i)
                 {
-                    if (c1 == c2)
+                    if (c == calculator_symbols.second[i])
                     {
                         calculator_symbol = true;
                         break;
@@ -34,16 +37,16 @@ namespace GUIApplication
                 }
                 if (!calculator_symbol)
                 {
-                    for (char const c2 : available_symbols)
+                    for (size_t i{ 0 }; i != preprocessor_symbols.first; ++i)
                     {
-                        if (c1 == c2)
+                        if (c == preprocessor_symbols.second[i])
                         {
-                            special_symbol = true;
+                            preprocessor_symbol = true;
                             break;
                         }
                     }
 
-                    if (!special_symbol)
+                    if (!preprocessor_symbol)
                     {
                         return false;
                     }
@@ -51,11 +54,11 @@ namespace GUIApplication
 
 
                 TokenType cur_char{ nan };
-                if (special_symbol)
+                if (preprocessor_symbol)
                 {
-                    cur_char = special;
+                    cur_char = preprocessor;
                 }
-                else if (c1 >= '0' && c1 <= '9')
+                else if (c >= '0' && c <= '9')
                 {
                     cur_char = number;
                 }
@@ -77,7 +80,7 @@ namespace GUIApplication
 
                             break;
 
-                        case special:
+                        case preprocessor:
 
                             return false;
 
@@ -91,7 +94,7 @@ namespace GUIApplication
 
                 case math_operator:
 
-                    switch (static_cast<MathExpression::Operator>(c1))
+                    switch (static_cast<MathExpression::Operator>(c))
                     {
                         case MathExpression::Operator::pow:
                         case MathExpression::Operator::mul:
@@ -120,7 +123,7 @@ namespace GUIApplication
 
                                 break;
 
-                            case special:
+                            case preprocessor:
 
                                 //return true;
                                 
@@ -131,12 +134,11 @@ namespace GUIApplication
 
 
                         case MathExpression::Operator::left_parenthesis:
-                        case MathExpression::Operator::right_parenthesis:
-                            
+
                             switch (prev_char)
                             {
                             case nan:
-                                
+
                                 //return true;
 
                                 break;
@@ -153,9 +155,40 @@ namespace GUIApplication
 
                                 break;
 
-                            case special:
-                                
+                            case preprocessor:
+
                                 return false;
+
+                                break;
+                            }
+
+                        break;
+
+                        case MathExpression::Operator::right_parenthesis:
+                            
+                            switch (prev_char)
+                            {
+                            case nan:
+                                
+                                //return true;
+
+                                break;
+
+                            case number:
+
+                                //return true;
+
+                                break;
+
+                            case math_operator:
+
+                                return false;
+
+                                break;
+
+                            case preprocessor:
+                                
+                                return true;
 
                                 break;
                             }
@@ -169,7 +202,7 @@ namespace GUIApplication
 
                     break;
 
-                case special:
+                case preprocessor:
 
                     switch (prev_char)
                     {
@@ -191,7 +224,7 @@ namespace GUIApplication
 
                         break;
 
-                    case special:
+                    case preprocessor:
 
                         return false;
 
