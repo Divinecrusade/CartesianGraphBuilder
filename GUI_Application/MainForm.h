@@ -119,6 +119,7 @@ namespace GUIApplication {
 			this->formula->Size = System::Drawing::Size(364, 20);
 			this->formula->TabIndex = 0;
 			this->formula->TextChanged += gcnew System::EventHandler(this, &MainForm::formula_TextChanged);
+			this->formula->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::formula_KeyPress);
 			// 
 			// MainForm
 			// 
@@ -148,8 +149,11 @@ namespace GUIApplication {
 		
 		if (!Validater::validate(std_str))
 		{
-			formula->Text = formula->Text->Remove(formula->Text->Length - 1);
+			formula->Undo();
 		}
 	}
+private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	
+}
 };
 }

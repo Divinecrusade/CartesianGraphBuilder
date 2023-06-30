@@ -6,70 +6,86 @@
 
 namespace GUIApplication
 {
-    static struct Validater
+    static class Validater
     {        
-       static std::pair<size_t, char const* const> const calculator_symbols;
-       static std::pair<size_t, char const* const> const preprocessor_symbols;
+    private:
+
+       static std::pair<size_t const, char const* const> const calculator_symbols;
+       static std::pair<size_t const, char const* const> const preprocessor_symbols;
+
+       enum TokenType
+       {
+           nan, invalid, number, math_operator, preprocessor
+       };
+
+    private:
+
+        static TokenType check_char(char c)
+        {
+            bool calculator_symbol{ false };
+            bool preprocessor_symbol{ false };
+            for (size_t i{ 0 }; i != calculator_symbols.first; ++i)
+            {
+                if (c == calculator_symbols.second[i])
+                {
+                    calculator_symbol = true;
+                    break;
+                }
+            }
+            if (!calculator_symbol)
+            {
+                for (size_t i{ 0 }; i != preprocessor_symbols.first; ++i)
+                {
+                    if (c == preprocessor_symbols.second[i])
+                    {
+                        preprocessor_symbol = true;
+                        break;
+                    }
+                }
+
+                if (!preprocessor_symbol)
+                {
+                    return invalid;
+                }
+            }
+
+            if (preprocessor_symbol)
+            {
+                return preprocessor;
+            }
+            else if (c >= '0' && c <= '9')
+            {
+                return number;
+            }
+            else
+            {
+                return math_operator;
+            }
+        }
+
+    public:
 
        static bool validate(std::string const& expr)
        {
             if (expr.length() == 0) return true;
-
-            enum TokenType
-            {
-                nan, number, math_operator, preprocessor
-            };
 
             TokenType prev_char{ nan };
             bool prev_char_is_parenthesis{ false };
 
             for (char const c : expr)
             {
-                bool calculator_symbol{ false };
-                bool preprocessor_symbol{ false };
-                for (size_t i{ 0 }; i != calculator_symbols.first; ++i)
-                {
-                    if (c == calculator_symbols.second[i])
-                    {
-                        calculator_symbol = true;
-                        break;
-                    }
-                }
-                if (!calculator_symbol)
-                {
-                    for (size_t i{ 0 }; i != preprocessor_symbols.first; ++i)
-                    {
-                        if (c == preprocessor_symbols.second[i])
-                        {
-                            preprocessor_symbol = true;
-                            break;
-                        }
-                    }
-
-                    if (!preprocessor_symbol)
-                    {
-                        return false;
-                    }
-                }
-
-
-                TokenType cur_char{ nan };
-                if (preprocessor_symbol)
-                {
-                    cur_char = preprocessor;
-                }
-                else if (c >= '0' && c <= '9')
-                {
-                    cur_char = number;
-                }
-                else
-                {
-                    cur_char = math_operator;
-                }
+                TokenType cur_char{ check_char(c) };
 
                 switch (cur_char)
                 {
+                case invalid:
+
+                    return false;
+                    
+                    break;
+
                 case number:
+
                     switch (prev_char)
                     {
                         case nan:
@@ -89,6 +105,8 @@ namespace GUIApplication
                         default:
                             break;
                     }
+
+                    prev_char_is_parenthesis = false;
 
                     break;
 
@@ -130,8 +148,9 @@ namespace GUIApplication
                                 break;
                             }
 
-                        break;
+                            prev_char_is_parenthesis = false;
 
+                        break;
 
                         case MathExpression::Operator::left_parenthesis:
 
@@ -161,6 +180,8 @@ namespace GUIApplication
 
                                 break;
                             }
+
+                            prev_char_is_parenthesis = true;
 
                         break;
 
@@ -193,11 +214,9 @@ namespace GUIApplication
                                 break;
                             }
 
+                            prev_char_is_parenthesis = true;
+
                         break;
-
-                        default:
-
-                            if (prev_char != number) return false;
                     }
 
                     break;
@@ -230,6 +249,8 @@ namespace GUIApplication
 
                         break;
                     }
+
+                    prev_char_is_parenthesis = false;
 
                     break;
                 }
