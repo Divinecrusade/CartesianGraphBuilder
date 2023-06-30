@@ -260,5 +260,16 @@ namespace GUIApplication
 
             return true;
        };
+       
+       static bool validate(int key_code)
+       {
+           if (key_code >= '!' && key_code <= '~')
+           {
+               if (check_char(key_code) == invalid) return false;
+               else return true;
+           }
+           else return true;
+       };
+    
     };
 }
