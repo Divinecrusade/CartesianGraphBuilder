@@ -171,23 +171,6 @@ private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::
 		e->Handled = true;
 	}
 }
-private: System::Void formula_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
-	/*String^ system_str{formula->Text};
-	std::string std_str{ };
-
-	MarshalString(system_str, std_str);
-
-	if (!Validater::validate(std_str))
-	{
-		e->Cancel = true;
-		errorFormula->SetError(formula, "Error in formula");
-	}
-	else
-	{
-		e->Cancel = false;
-		errorFormula->SetError(formula, "");
-	}*/
-}
 private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ system_str{ formula->Text };
 	std::string std_str{ };
