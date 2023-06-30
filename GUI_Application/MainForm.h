@@ -173,6 +173,7 @@ private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::
 	}
 }
 private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (errorFormula->GetError(formula)->Length > 0) return;
 }
 private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	String^ system_str{ formula->Text };
