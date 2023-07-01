@@ -11,11 +11,11 @@ namespace GUIApplication
     private:
 
        static std::pair<size_t const, char const* const> const calculator_symbols;
-       static std::pair<size_t const, char const* const> const preprocessor_symbols;
+       static std::pair<size_t const, char const* const> const precalculator_symbols;
 
        enum TokenType
        {
-           nan, invalid, number, math_operator, preprocessor
+           nan, invalid, number, math_operator, precalculator
        };
 
     private:
