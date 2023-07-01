@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Validater.hpp"
+#include "CartesianSystem.hpp"
 
 namespace GUIApplication {
 
@@ -89,6 +90,7 @@ namespace GUIApplication {
 			this->graphArea->Name = L"graphArea";
 			this->graphArea->Size = System::Drawing::Size(700, 700);
 			this->graphArea->TabIndex = 0;
+			this->graphArea->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::graphArea_Paint);
 			// 
 			// inputGroup
 			// 
@@ -173,15 +175,23 @@ private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::
 	}
 }
 private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (errorFormula->GetError(formula)->Length > 0) return;
+	if (errorFormula->GetError(formula)->Length != 0) return;
+
+	String^ system_str_expr{ formula->Text };
+	std::string std_str_expr{ };
+
+	MarshalString(system_str_expr, std_str_expr);
+
+	graphArea->Invalidate();
+	//CartesianSystem::Plot::set(std_str_expr);
 }
 private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	String^ system_str{ formula->Text };
-	std::string std_str{ };
+	String^ system_str_expr{ formula->Text };
+	std::string std_str_expr{ };
+	
+	MarshalString(system_str_expr, std_str_expr);
 
-	MarshalString(system_str, std_str);
-
-	if (!Validater::validate(std_str))
+	if (!Validater::validate(std_str_expr))
 	{
 		errorFormula->SetError(formula, "Error in formula");
 		buildPlot->Enabled = false;
@@ -191,6 +201,11 @@ private: System::Void formula_TextChanged(System::Object^ sender, System::EventA
 		errorFormula->SetError(formula, "");
 		buildPlot->Enabled = true;
 	}
+}
+private: System::Void graphArea_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	CartesianSystem::set(graphArea->Size);
+	CartesianSystem::draw(e->Graphics);
+	//CartesianSystem::Plot::draw(e->Graphics);
 }
 };
 }
