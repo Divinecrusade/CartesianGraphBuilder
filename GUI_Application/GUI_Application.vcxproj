@@ -123,6 +123,7 @@
     <ClCompile Include="..\Calculator\ConverterRPN.cpp" />
     <ClCompile Include="..\Calculator\ExecuterRPN.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="Validater.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Calculator\Calculator.hpp" />

@@ -27,6 +27,9 @@
     <ClCompile Include="..\Calculator\ExecuterRPN.cpp">
       <Filter>Calculator</Filter>
     </ClCompile>
+    <ClCompile Include="Validater.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
