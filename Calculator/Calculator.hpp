@@ -39,8 +39,8 @@ namespace MathExprCalculator
             std::string formatted_expr{ };
             for (size_t i{ 0 }; i != expr.length(); ++i)
             {
-                if (((expr[i] >= '0' && expr[i] <= '9') || expr[i] == '.')
-                    || (expr[i] == '-' && expr[i + 1] >= '0' && expr[i + 1] <= '9'))
+                if (is_digit(expr[i]) || expr[i] == '.' ||
+                   (expr[i] == '-' && (i == 0 || (is_digit(expr[i + 1]) && !is_digit(expr[i - 1])))))
                 {
                     if (prev_char_is_operator)
                     {
@@ -73,6 +73,11 @@ namespace MathExprCalculator
         };
 
     private:
+
+        bool is_digit(char c) const
+        {
+            return c >= '0' && c <= '9';
+        }
 
         std::shared_ptr< MathExpression::IExprConverter<N> > converter;
         std::shared_ptr< MathExpression::IExprExecuter<N> >  executer;
