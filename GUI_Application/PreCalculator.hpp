@@ -21,11 +21,9 @@ namespace GUIApplication
 
         static std::string process_symbols(std::string_view expr, double arg_value)
         {
-            static std::map<Constants, std::string> const constants_value{ {exponent, "2.718"} };
+            static std::map<Constants, std::string> const constants_values{ {exponent, "2.718"} };
 
-            std::ostringstream sout{ };
-            sout << arg_value;
-            std::string arg_value_str{ sout.str() };
+            std::string arg_value_str{ std::to_string(arg_value) };
             std::string processed_expr{ };
 
             for (auto const& c : expr)
@@ -33,7 +31,7 @@ namespace GUIApplication
                 switch (c)
                 {
                     case argument: processed_expr += arg_value_str; break;
-                    case exponent: processed_expr += constants_value[exponent]; break;
+                    case exponent: processed_expr += constants_values.at(exponent); break;
                     default: processed_expr += c;
                 }
             }
