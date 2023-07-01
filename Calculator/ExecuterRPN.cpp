@@ -25,7 +25,7 @@ namespace MathExprCalculator
         std::istringstream ssin{expr_line};
         ssin.exceptions(std::ios::failbit);
 
-        while (ssin.peek() != EOF)
+        while (!ssin.eof() && ssin.peek() != EOF)
         {
             double x{ };
             MathExpression::Operator o{ };

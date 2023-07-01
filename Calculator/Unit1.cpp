@@ -13,10 +13,11 @@ int main()
     //MathExprCalculator::ExecuterRPN executer{ };
     
     //std::string expr{ "5^2+4*2/(2-5)" };
-    std::string expr{ "1000--7" };
+    //std::string expr{ "1000--7" };
     //std::string expr{ "3" };
-    //std::string expr{ "3+4*2/(1-5)" };
-    //std::string expr{ "3 + 4 * 2 / ( 1 - 5 ) ^ 2 " };
+    //std::string expr{ "-3" };
+    //std::string expr{ "-3+4*2/(1-5)" };
+    std::string expr{ "3+4*2/(-1-5)^2" };
     //std::string expr{ "( 1 + 2 ) * 4 + 3 " };
 
     //std::cin >> std::noskipws >> expr;
