@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="..\Calculator\ConverterRPN.cpp" />
     <ClCompile Include="..\Calculator\ExecuterRPN.cpp" />
+    <ClCompile Include="CartesianSystem.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="Validater.cpp" />
   </ItemGroup>
@@ -129,6 +130,8 @@
     <ClInclude Include="..\Calculator\Calculator.hpp" />
     <ClInclude Include="..\Calculator\ConverterRPN.hpp" />
     <ClInclude Include="..\Calculator\ExecuterRPN.hpp" />
+    <ClInclude Include="..\Calculator\ICalculator.hpp" />
+    <ClInclude Include="CartesianSystem.hpp" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

@@ -30,6 +30,9 @@
     <ClCompile Include="Validater.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CartesianSystem.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -49,6 +52,12 @@
     </ClInclude>
     <ClInclude Include="PreCalculator.hpp">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CartesianSystem.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Calculator\ICalculator.hpp">
+      <Filter>Calculator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
