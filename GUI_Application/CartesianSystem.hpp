@@ -21,11 +21,11 @@ namespace GUIApplication
         
         static constexpr int padding{ 10 };
 
-        static constexpr int base_min_x{ -4 };
-        static constexpr int base_max_x{ 4 };
+        static constexpr int base_min_x{ -2 };
+        static constexpr int base_max_x{ 2 };
         
-        static constexpr int base_min_y{ -4 };
-        static constexpr int base_max_y{ 4 };
+        static constexpr int base_min_y{ -2 };
+        static constexpr int base_max_y{ 2 };
 
         static constexpr int line_thickness{ 2 };
         

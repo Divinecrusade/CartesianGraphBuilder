@@ -43,11 +43,58 @@ namespace GUIApplication
     {
         gfx->Clear(System::Drawing::Color::White);
 
-        System::Drawing::Pen^ redPen = gcnew System::Drawing::Pen(System::Drawing::Color::Black);
-        redPen->Width = line_thickness;
+        System::Drawing::Pen^ blackPen = gcnew System::Drawing::Pen(System::Drawing::Color::Black);
+        blackPen->Width = line_thickness;
 
-        gfx->DrawLine(redPen, graph_area.Left, y_zero, graph_area.Right, y_zero);
-        gfx->DrawLine(redPen, x_zero, graph_area.Top, x_zero, graph_area.Bottom);
+        gfx->DrawLine(blackPen, graph_area.Left, y_zero, graph_area.Right, y_zero);
+        gfx->DrawLine(blackPen, x_zero, graph_area.Top, x_zero, graph_area.Bottom);
+        
+        System::Drawing::FontFamily^ fntFamily = gcnew System::Drawing::FontFamily("Times New Roman");
+        System::Drawing::Font^ fntWrite = gcnew System::Drawing::Font(fntFamily, 10.00F, System::Drawing::FontStyle::Regular);
+
+        static constexpr int x_axis_x_margin{ -10 };
+        static constexpr int x_axis_y_margin{ 3 };
+        static constexpr int y_axis_x_margin{ 5 };
+        static constexpr int y_axis_y_margin{ -5 };
+
+        gfx->DrawString("x", fntWrite, System::Drawing::Brushes::Black, graph_area.Right + x_axis_x_margin, y_zero + x_axis_y_margin);
+        gfx->DrawString("y", fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, graph_area.Top + y_axis_y_margin);
+
+        static constexpr int segment_halfwidth{ 4 };
+
+        System::String^ s_zero{ "0" };
+        gfx->DrawString(s_zero, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero + x_axis_y_margin);
+
+
+        for (int x{ 1 }; x <= max_x - 1; ++x)
+        {
+            System::String^ str{ x.ToString() };
+            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero - segment_halfwidth);
+            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero + segment_halfwidth);
+            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + x * pixels_in_unit_x - y_axis_x_margin, y_zero + x_axis_y_margin);
+        }
+        for (int x{ -1 }; x >= min_x + 1; --x)
+        {
+            System::String^ str{ x.ToString() };
+            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero - segment_halfwidth);
+            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero + segment_halfwidth);
+            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + x * pixels_in_unit_x - y_axis_x_margin, y_zero + x_axis_y_margin);
+        }
+
+        for (int y{ 1 }; y <= max_y - 1; ++y)
+        {
+            System::String^ str{ y.ToString() };
+            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero + segment_halfwidth, y_zero - y * pixels_in_unit_y);
+            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero - segment_halfwidth, y_zero - y * pixels_in_unit_y);
+            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero - y * pixels_in_unit_y + x_axis_x_margin);
+        }
+        for (int y{ -1 }; y >= min_y + 1; --y)
+        {
+            System::String^ str{ y.ToString() };
+            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero + segment_halfwidth, y_zero - y * pixels_in_unit_y);
+            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero - segment_halfwidth, y_zero - y * pixels_in_unit_y);
+            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero - y * pixels_in_unit_y + x_axis_x_margin);
+        }
     }
 
     System::Drawing::Point CartesianSystem::local_coordinates_to_global(double x, double y)
