@@ -34,7 +34,7 @@ namespace MathExprCalculator
         virtual double calculate(std::string_view expr) const override
         {
             char const delimeter{ converter->get_delimeter() };
-            bool prev_char_is_operator{ false };
+            bool prev_char_is_operator{ true };
 
             std::string formatted_expr{ };
             for (size_t i{ 0 }; i != expr.length(); ++i)
@@ -44,23 +44,24 @@ namespace MathExprCalculator
                    (i == 0 || 
                    (is_digit(expr[i + 1]) && !is_digit(expr[i - 1])))))
                 {
-                    if (prev_char_is_operator)
-                    {
-                        formatted_expr += delimeter;
-                    }
-
                     formatted_expr += expr[i];
                     prev_char_is_operator = false;
                 }
                 else
                 {
-                    formatted_expr += delimeter;
+                    if (!prev_char_is_operator)
+                    {
+                        formatted_expr += delimeter;
+                    }
+
                     formatted_expr += expr[i];
+                    formatted_expr += delimeter;
 
                     prev_char_is_operator = true;
                 }
             }
-            formatted_expr += delimeter;
+            if (formatted_expr[formatted_expr.length() - 1] != delimeter)
+              formatted_expr += delimeter;
 
 
             return executer->execute_expr_according_notation(converter->convert_expr_with_notation(formatted_expr));

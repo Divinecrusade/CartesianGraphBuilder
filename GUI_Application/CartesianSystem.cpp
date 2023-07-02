@@ -99,9 +99,12 @@ namespace GUIApplication
 
     System::Drawing::Point CartesianSystem::local_coordinates_to_global(double x, double y)
     {
+        if (y == INFINITY || y == -INFINITY) return INVALID;
+        
         System::Drawing::Point global(x_zero + std::lround(x * pixels_in_unit_x), y_zero - std::lround(y * pixels_in_unit_y));
         
-        return global.X > graph_area.Width + 2 * padding || global.X < 0 || global.Y > graph_area.Height + 2 * padding || global.Y < 0 ? INVALID : global;
+        return global;
+        //return global.X > graph_area.Width + 2 * padding || global.X < 0 || global.Y > graph_area.Height + 2 * padding || global.Y < 0 ? INVALID : global;
     }
 
 
@@ -125,12 +128,16 @@ namespace GUIApplication
             redPen->Width = 2;
 
             double x{ x_start };
-            double y{ calculator->calculate(PreCalculator<'x'>::process_symbols(expr, x)) };
-            System::Drawing::Point from{ CartesianSystem::local_coordinates_to_global(x, y) };
+            double y{ };
+            
+            y = calculator->calculate(PreCalculator<'x'>::process_symbols(expr, x));
             x += x_step;
-            for (; x < x_end; x += x_step)
+
+            System::Drawing::Point from{ CartesianSystem::local_coordinates_to_global(x, y) };
+            for (; x <= x_end; x += x_step)
             {
                 y = calculator->calculate(PreCalculator<'x'>::process_symbols(expr, x));
+
                 System::Drawing::Point to{ CartesianSystem::local_coordinates_to_global(x, y) };
 
                 if (from != CartesianSystem::INVALID && to != CartesianSystem::INVALID)

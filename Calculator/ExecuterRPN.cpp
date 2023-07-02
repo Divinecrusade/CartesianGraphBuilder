@@ -61,6 +61,8 @@ namespace MathExprCalculator
                         operands.pop();
 
                         operation_result = a / b;
+
+                        if (operation_result == INFINITY || operation_result == -INFINITY) return operation_result;
                     }
 
                     break;
