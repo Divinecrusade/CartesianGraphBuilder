@@ -4,6 +4,11 @@
 
 namespace GUIApplication
 {
+    int CartesianSystem::min_x;
+    int CartesianSystem::max_x;
+    int CartesianSystem::min_y;
+    int CartesianSystem::max_y;
+    
     double CartesianSystem::pixels_in_unit_x;
     double CartesianSystem::pixels_in_unit_y;
     System::Drawing::Rectangle CartesianSystem::graph_area;
@@ -13,9 +18,15 @@ namespace GUIApplication
 
     System::Drawing::Point const CartesianSystem::INVALID( -1, -1 );
 
-    void CartesianSystem::set(System::Drawing::Size area)
+    void CartesianSystem::set(System::Drawing::Size area, int scale)
     {
         graph_area = System::Drawing::Rectangle(padding, padding, area.Width - 2 * padding, area.Height - 2 * padding);
+
+        min_x = base_min_x * scale;
+        max_x = base_max_x * scale;
+
+        min_y = base_min_y * scale;
+        max_y = base_max_y * scale;
 
         pixels_in_unit_x = double(graph_area.Width) / (std::abs(max_x - min_x));
         pixels_in_unit_y = double(graph_area.Height) / (std::abs(max_y - min_y));
@@ -41,7 +52,8 @@ namespace GUIApplication
 
     System::Drawing::Point CartesianSystem::local_coordinates_to_global(double x, double y)
     {
-        System::Drawing::Point global(x_zero + x * pixels_in_unit_x, y_zero - y * pixels_in_unit_y);
+        System::Drawing::Point global(x_zero + std::lround(x * pixels_in_unit_x), y_zero - std::lround(y * pixels_in_unit_y));
+        
         return global.X > graph_area.Width + 2 * padding || global.X < 0 || global.Y > graph_area.Height + 2 * padding || global.Y < 0 ? INVALID : global;
     }
 

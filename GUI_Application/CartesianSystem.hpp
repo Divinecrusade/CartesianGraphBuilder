@@ -13,7 +13,7 @@ namespace GUIApplication
 
         static System::Drawing::Point const INVALID;
         
-        static void set(System::Drawing::Size area);
+        static void set(System::Drawing::Size area, int scale);
         static void draw(System::Drawing::Graphics^ gfx);
         static System::Drawing::Point local_coordinates_to_global(double x, double y);
 
@@ -21,14 +21,20 @@ namespace GUIApplication
         
         static constexpr int padding{ 10 };
 
-        static constexpr int min_x{ -10 };
-        static constexpr int max_x{ 10 };
+        static constexpr int base_min_x{ -4 };
+        static constexpr int base_max_x{ 4 };
         
-        static constexpr int min_y{ -10 };
-        static constexpr int max_y{ 10 };
+        static constexpr int base_min_y{ -4 };
+        static constexpr int base_max_y{ 4 };
 
         static constexpr int line_thickness{ 2 };
         
+        static int min_x;
+        static int max_x;
+
+        static int min_y;
+        static int max_y;
+
         static double pixels_in_unit_x;
         static double pixels_in_unit_y;
         static System::Drawing::Rectangle graph_area;
@@ -47,7 +53,7 @@ namespace GUIApplication
 
         private:
 
-            friend void CartesianSystem::set(System::Drawing::Size);
+            friend void CartesianSystem::set(System::Drawing::Size, int);
 
             static std::string expr;
             static std::shared_ptr<MathExprCalculator::ICalculator> const calculator;

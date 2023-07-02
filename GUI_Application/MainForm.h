@@ -44,6 +44,8 @@ namespace GUIApplication {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ buildPlot;
 	private: System::Windows::Forms::ErrorProvider^ errorFormula;
+	private: System::Windows::Forms::TrackBar^ systemScale;
+	private: System::Windows::Forms::Label^ label3;
 
 
 	private: System::Windows::Forms::TextBox^ formula;
@@ -73,12 +75,15 @@ namespace GUIApplication {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->graphArea = (gcnew System::Windows::Forms::Panel());
 			this->inputGroup = (gcnew System::Windows::Forms::GroupBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->systemScale = (gcnew System::Windows::Forms::TrackBar());
 			this->buildPlot = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->formula = (gcnew System::Windows::Forms::TextBox());
 			this->errorFormula = (gcnew System::Windows::Forms::ErrorProvider(this->components));
 			this->inputGroup->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->systemScale))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorFormula))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -95,6 +100,8 @@ namespace GUIApplication {
 			// inputGroup
 			// 
 			this->inputGroup->BackColor = System::Drawing::SystemColors::Control;
+			this->inputGroup->Controls->Add(this->label3);
+			this->inputGroup->Controls->Add(this->systemScale);
 			this->inputGroup->Controls->Add(this->buildPlot);
 			this->inputGroup->Controls->Add(this->label2);
 			this->inputGroup->Controls->Add(this->label1);
@@ -105,6 +112,26 @@ namespace GUIApplication {
 			this->inputGroup->Size = System::Drawing::Size(405, 700);
 			this->inputGroup->TabIndex = 1;
 			this->inputGroup->TabStop = false;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(8, 196);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(175, 13);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L"Масштаб координатной системы";
+			// 
+			// systemScale
+			// 
+			this->systemScale->Location = System::Drawing::Point(11, 212);
+			this->systemScale->Maximum = 20;
+			this->systemScale->Minimum = 1;
+			this->systemScale->Name = L"systemScale";
+			this->systemScale->Size = System::Drawing::Size(368, 45);
+			this->systemScale->TabIndex = 4;
+			this->systemScale->Value = 1;
+			this->systemScale->ValueChanged += gcnew System::EventHandler(this, &MainForm::systemScale_ValueChanged);
 			// 
 			// buildPlot
 			// 
@@ -163,6 +190,7 @@ namespace GUIApplication {
 			this->Text = L"CGB";
 			this->inputGroup->ResumeLayout(false);
 			this->inputGroup->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->systemScale))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorFormula))->EndInit();
 			this->ResumeLayout(false);
 
@@ -203,9 +231,12 @@ private: System::Void formula_TextChanged(System::Object^ sender, System::EventA
 	}
 }
 private: System::Void graphArea_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-	CartesianSystem::set(graphArea->Size);
+	CartesianSystem::set(graphArea->Size, systemScale->Value);
 	CartesianSystem::draw(e->Graphics);
 	CartesianSystem::Plot::draw(e->Graphics);
+}
+private: System::Void systemScale_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+	graphArea->Invalidate();
 }
 };
 }
