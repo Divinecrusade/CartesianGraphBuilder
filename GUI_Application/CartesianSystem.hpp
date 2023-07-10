@@ -19,7 +19,7 @@ namespace GUIApplication
 
     private:
         
-        static constexpr int padding{ 10 };
+        static constexpr int padding{ 0 };
 
         static constexpr int base_min_x{ -2 };
         static constexpr int base_max_x{ 2 };
