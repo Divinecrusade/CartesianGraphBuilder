@@ -16,7 +16,7 @@ namespace MathExprCalculator
         ExecuterRPN& operator=(ExecuterRPN const&) = delete;
         ExecuterRPN& operator=(ExecuterRPN&&) = delete;
 
-        ~ExecuterRPN() = default;
+        virtual ~ExecuterRPN() = default;
 
         virtual double execute_expr_according_notation(std::queue<std::string> const& expr) const override;
     };

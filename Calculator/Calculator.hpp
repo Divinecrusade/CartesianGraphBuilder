@@ -29,7 +29,7 @@ namespace MathExprCalculator
         Calculator& operator=(Calculator const&) = delete;
         Calculator& operator=(Calculator&&) = delete;
 
-        ~Calculator() = default;
+        virtual ~Calculator() = default;
 
         virtual double calculate(std::string_view expr) const override
         {

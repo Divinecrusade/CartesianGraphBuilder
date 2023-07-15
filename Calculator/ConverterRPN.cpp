@@ -5,10 +5,10 @@
 
 namespace MathExprCalculator
 {
-    std::map<MathExpression::Operator const, int const> const ConverterRPN::precedences{ { MathExpression::Operator::pow, 4 }, { MathExpression::Operator::mul, 3 },
+    std::map<MathExpression::Operator, int> const ConverterRPN::precedences{ { MathExpression::Operator::pow, 4 }, { MathExpression::Operator::mul, 3 },
                                                                                          { MathExpression::Operator::div, 3 }, { MathExpression::Operator::plus, 2 }, 
                                                                                          { MathExpression::Operator::minus, 2 } };
-    std::map<MathExpression::Operator const, MathExpression::Associativity const> const ConverterRPN::associativities{ { MathExpression::Operator::pow, MathExpression::Associativity::right }, { MathExpression::Operator::mul, MathExpression::Associativity::left },
+    std::map<MathExpression::Operator, MathExpression::Associativity> const ConverterRPN::associativities{ { MathExpression::Operator::pow, MathExpression::Associativity::right }, { MathExpression::Operator::mul, MathExpression::Associativity::left },
                                                                                                                        { MathExpression::Operator::div, MathExpression::Associativity::left }, { MathExpression::Operator::plus, MathExpression::Associativity::left },
                                                                                                                        { MathExpression::Operator::minus, MathExpression::Associativity::left } };
 
@@ -63,6 +63,11 @@ namespace MathExprCalculator
 
                     break;
 
+                    case MathExpression::Operator::pow:
+                    case MathExpression::Operator::mul:
+                    case MathExpression::Operator::div:
+                    case MathExpression::Operator::plus:
+                    case MathExpression::Operator::minus:
                     default:
                     {
                         while ( (!operators.empty() && operators.top() != MathExpression::Operator::left_parenthesis) &&
@@ -86,9 +91,6 @@ namespace MathExprCalculator
                 result.push(std::string{ token });
             }
         }
-        
-        auto s = result.size();
-
 
         while (!operators.empty())
         {

@@ -6,12 +6,12 @@
 
 namespace GUIApplication
 {
-    static class Validater
+    class Validater
     {        
     private:
 
-       static std::pair<size_t const, char const* const> const calculator_symbols;
-       static std::pair<size_t const, char const* const> const precalculator_symbols;
+       static std::pair<size_t, char const*> const calculator_symbols;
+       static std::pair<size_t, char const*> const precalculator_symbols;
 
        enum TokenType
        {
@@ -20,12 +20,12 @@ namespace GUIApplication
 
     private:
 
-        static TokenType check_char(char c);
+        static TokenType check_char(wchar_t c);
 
     public:
 
        static bool validate(std::string const& expr);
-       static bool validate(int key_code);
+       static bool validate(wchar_t key_code);
     
     };
 }
