@@ -182,8 +182,8 @@ private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^
 
 	MarshalString(system_str_expr, std_str_expr);
 
+	CartesianSystem::Plot::set(std_str_expr);
 	graphArea->Invalidate();
-	//CartesianSystem::Plot::set(std_str_expr);
 }
 private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	String^ system_str_expr{ formula->Text };
@@ -205,7 +205,7 @@ private: System::Void formula_TextChanged(System::Object^ sender, System::EventA
 private: System::Void graphArea_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	CartesianSystem::set(graphArea->Size);
 	CartesianSystem::draw(e->Graphics);
-	//CartesianSystem::Plot::draw(e->Graphics);
+	CartesianSystem::Plot::draw(e->Graphics);
 }
 };
 }
