@@ -7,6 +7,7 @@ namespace GUIApplication
     {
         bool calculator_symbol{ false };
         bool preprocessor_symbol{ false };
+
         for (size_t i{ 0 }; i != calculator_symbols.first; ++i)
         {
             if (c == calculator_symbols.second[i])
@@ -53,6 +54,7 @@ namespace GUIApplication
         TokenType prev_char{ nan };
         bool prev_char_is_left_parenthesis{ false };
         bool prev_char_is_right_parenthesis{ false };
+        int parenthesis_balance{ 0 };
 
         for (size_t i{ 0 }; i != expr.length(); ++i)
         {
@@ -201,6 +203,7 @@ namespace GUIApplication
                         break;
                     }
 
+                    ++parenthesis_balance;
                     prev_char_is_left_parenthesis = true;
                     prev_char_is_right_parenthesis = false;
 
@@ -235,6 +238,7 @@ namespace GUIApplication
                         break;
                     }
 
+                    --parenthesis_balance;
                     prev_char_is_left_parenthesis = false;
                     prev_char_is_right_parenthesis = true;
 
@@ -280,8 +284,10 @@ namespace GUIApplication
             prev_char = cur_char;
         }
 
+        if (parenthesis_balance != 0) return false;
+
         return true;
-    };
+    }
 
     bool Validater::validate(int key_code)
     {
@@ -291,5 +297,5 @@ namespace GUIApplication
             else return true;
         }
         else return true;
-    };
+    }
 }
