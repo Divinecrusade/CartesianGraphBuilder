@@ -184,10 +184,12 @@ private: System::Void formula_TextChanged(System::Object^ sender, System::EventA
 	if (!Validater::validate(std_str))
 	{
 		errorFormula->SetError(formula, "Error in formula");
+		buildPlot->Enabled = false;
 	}
 	else
 	{
 		errorFormula->SetError(formula, "");
+		buildPlot->Enabled = true;
 	}
 }
 };

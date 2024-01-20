@@ -17,9 +17,9 @@ namespace GUIApplication
         }
         if (!calculator_symbol)
         {
-            for (size_t i{ 0 }; i != preprocessor_symbols.first; ++i)
+            for (size_t i{ 0 }; i != precalculator_symbols.first; ++i)
             {
-                if (c == preprocessor_symbols.second[i])
+                if (c == precalculator_symbols.second[i])
                 {
                     preprocessor_symbol = true;
                     break;
@@ -34,7 +34,7 @@ namespace GUIApplication
 
         if (preprocessor_symbol)
         {
-            return preprocessor;
+            return precalculator;
         }
         else if (c >= '0' && c <= '9')
         {
@@ -79,7 +79,7 @@ namespace GUIApplication
 
                     break;
 
-                case preprocessor:
+                case precalculator:
 
                     return false;
 
@@ -124,7 +124,7 @@ namespace GUIApplication
 
                         break;
 
-                    case preprocessor:
+                    case precalculator:
 
                         //return true;
 
@@ -157,7 +157,7 @@ namespace GUIApplication
 
                         break;
 
-                    case preprocessor:
+                    case precalculator:
 
                         return false;
 
@@ -191,7 +191,7 @@ namespace GUIApplication
 
                         break;
 
-                    case preprocessor:
+                    case precalculator:
 
                         return true;
 
@@ -206,7 +206,7 @@ namespace GUIApplication
 
                 break;
 
-            case preprocessor:
+            case precalculator:
 
                 switch (prev_char)
                 {
@@ -228,7 +228,7 @@ namespace GUIApplication
 
                     break;
 
-                case preprocessor:
+                case precalculator:
 
                     return false;
 
