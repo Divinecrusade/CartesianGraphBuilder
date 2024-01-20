@@ -70,7 +70,8 @@ namespace GUIApplication
             if (expr.length() == 0) return true;
 
             TokenType prev_char{ nan };
-            bool prev_char_is_parenthesis{ false };
+            bool prev_char_is_left_parenthesis{ false };
+            bool prev_char_is_right_parenthesis{ false };
 
             for (char const c : expr)
             {
@@ -92,6 +93,7 @@ namespace GUIApplication
                         case number:
                         case math_operator:
 
+                            if (prev_char_is_right_parenthesis) return false;
                             //return true;
 
                             break;
@@ -106,7 +108,7 @@ namespace GUIApplication
                             break;
                     }
 
-                    prev_char_is_parenthesis = false;
+                    prev_char_is_left_parenthesis = prev_char_is_right_parenthesis = false;
 
                     break;
 
@@ -136,7 +138,7 @@ namespace GUIApplication
 
                             case math_operator:
 
-                                if (!prev_char_is_parenthesis) return false;
+                                if (!prev_char_is_right_parenthesis) return false;
                                 //else return true;
 
                                 break;
@@ -148,7 +150,7 @@ namespace GUIApplication
                                 break;
                             }
 
-                            prev_char_is_parenthesis = false;
+                            prev_char_is_left_parenthesis = prev_char_is_right_parenthesis = false;
 
                         break;
 
@@ -181,7 +183,8 @@ namespace GUIApplication
                                 break;
                             }
 
-                            prev_char_is_parenthesis = true;
+                            prev_char_is_left_parenthesis = true;
+                            prev_char_is_right_parenthesis = false;
 
                         break;
 
@@ -214,7 +217,8 @@ namespace GUIApplication
                                 break;
                             }
 
-                            prev_char_is_parenthesis = true;
+                            prev_char_is_left_parenthesis = false;
+                            prev_char_is_right_parenthesis = true;
 
                         break;
                     }
@@ -250,7 +254,7 @@ namespace GUIApplication
                         break;
                     }
 
-                    prev_char_is_parenthesis = false;
+                    prev_char_is_left_parenthesis = prev_char_is_right_parenthesis = false;
 
                     break;
                 }
