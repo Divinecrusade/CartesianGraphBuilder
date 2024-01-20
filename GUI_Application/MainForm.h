@@ -125,7 +125,7 @@ namespace GUIApplication {
 			// systemScale
 			// 
 			this->systemScale->Location = System::Drawing::Point(11, 212);
-			this->systemScale->Maximum = 20;
+			this->systemScale->Maximum = 9;
 			this->systemScale->Minimum = 1;
 			this->systemScale->Name = L"systemScale";
 			this->systemScale->Size = System::Drawing::Size(368, 45);
