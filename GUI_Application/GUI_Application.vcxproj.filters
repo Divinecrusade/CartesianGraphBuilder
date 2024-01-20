@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Calculator">
+      <UniqueIdentifier>{c5f1ab0b-35fe-4fd4-b439-fe7bc5cb1827}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp">
@@ -22,6 +25,9 @@
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Calculator\Calculator.hpp">
+      <Filter>Calculator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
