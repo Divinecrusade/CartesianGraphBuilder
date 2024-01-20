@@ -39,7 +39,8 @@ namespace MathExprCalculator
             std::string formatted_expr{ };
             for (size_t i{ 0 }; i != expr.length(); ++i)
             {
-                if ((expr[i] >= '0' && expr[i] <= '9') || expr[i] == '.')
+                if (((expr[i] >= '0' && expr[i] <= '9') || expr[i] == '.')
+                    || (expr[i] == '-' && expr[i + 1] >= '0' && expr[i + 1] <= '9'))
                 {
                     if (prev_char_is_operator)
                     {
