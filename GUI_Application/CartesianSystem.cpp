@@ -100,6 +100,8 @@ namespace GUIApplication
     System::Drawing::Point CartesianSystem::local_coordinates_to_global(double x, double y)
     {
         if (y == INFINITY || y == -INFINITY) return INVALID;
+        if (y > max_y) y = max_y + 1;
+        else if (y < min_y) y = min_y - 1;
         
         System::Drawing::Point global(x_zero + std::lround(x * pixels_in_unit_x), y_zero - std::lround(y * pixels_in_unit_y));
         
