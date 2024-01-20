@@ -41,6 +41,10 @@ namespace GUIApplication {
 	private: System::Windows::Forms::GroupBox^ inputGroup;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Button^ buildPlot;
+	private: System::Windows::Forms::ErrorProvider^ errorFormula;
+
+
 	private: System::Windows::Forms::TextBox^ formula;
 
 	private: void MarshalString(String^ s, std::string& os) {
@@ -50,12 +54,13 @@ namespace GUIApplication {
 		os = chars;
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
 	}
+	private: System::ComponentModel::IContainer^ components;
 
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -64,12 +69,16 @@ namespace GUIApplication {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->graphArea = (gcnew System::Windows::Forms::Panel());
 			this->inputGroup = (gcnew System::Windows::Forms::GroupBox());
+			this->buildPlot = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->formula = (gcnew System::Windows::Forms::TextBox());
+			this->errorFormula = (gcnew System::Windows::Forms::ErrorProvider(this->components));
 			this->inputGroup->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorFormula))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// graphArea
@@ -84,6 +93,7 @@ namespace GUIApplication {
 			// inputGroup
 			// 
 			this->inputGroup->BackColor = System::Drawing::SystemColors::Control;
+			this->inputGroup->Controls->Add(this->buildPlot);
 			this->inputGroup->Controls->Add(this->label2);
 			this->inputGroup->Controls->Add(this->label1);
 			this->inputGroup->Controls->Add(this->formula);
@@ -93,6 +103,16 @@ namespace GUIApplication {
 			this->inputGroup->Size = System::Drawing::Size(405, 700);
 			this->inputGroup->TabIndex = 1;
 			this->inputGroup->TabStop = false;
+			// 
+			// buildPlot
+			// 
+			this->buildPlot->Location = System::Drawing::Point(304, 77);
+			this->buildPlot->Name = L"buildPlot";
+			this->buildPlot->Size = System::Drawing::Size(75, 23);
+			this->buildPlot->TabIndex = 3;
+			this->buildPlot->Text = L"Построить";
+			this->buildPlot->UseVisualStyleBackColor = true;
+			this->buildPlot->Click += gcnew System::EventHandler(this, &MainForm::buildPlot_Click);
 			// 
 			// label2
 			// 
@@ -116,10 +136,13 @@ namespace GUIApplication {
 			// 
 			this->formula->Location = System::Drawing::Point(35, 50);
 			this->formula->Name = L"formula";
-			this->formula->Size = System::Drawing::Size(364, 20);
+			this->formula->Size = System::Drawing::Size(345, 20);
 			this->formula->TabIndex = 0;
-			this->formula->TextChanged += gcnew System::EventHandler(this, &MainForm::formula_TextChanged);
 			this->formula->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::formula_KeyPress);
+			// 
+			// errorFormula
+			// 
+			this->errorFormula->ContainerControl = this;
 			// 
 			// MainForm
 			// 
@@ -137,23 +160,48 @@ namespace GUIApplication {
 			this->Text = L"CGB";
 			this->inputGroup->ResumeLayout(false);
 			this->inputGroup->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->errorFormula))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		String^ system_str{ formula->Text };
-		std::string std_str{ };
-
-		MarshalString(system_str, std_str);
-		
-		if (!Validater::validate(std_str))
-		{
-			formula->Undo();
-		}
-	}
 private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-	
+	if (!Validater::validate(e->KeyChar))
+	{
+		e->Handled = true;
+	}
+}
+private: System::Void formula_Validating(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+	/*String^ system_str{formula->Text};
+	std::string std_str{ };
+
+	MarshalString(system_str, std_str);
+
+	if (!Validater::validate(std_str))
+	{
+		e->Cancel = true;
+		errorFormula->SetError(formula, "Error in formula");
+	}
+	else
+	{
+		e->Cancel = false;
+		errorFormula->SetError(formula, "");
+	}*/
+}
+private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ system_str{ formula->Text };
+	std::string std_str{ };
+
+	MarshalString(system_str, std_str);
+
+	if (!Validater::validate(std_str))
+	{
+		errorFormula->SetError(formula, "Error in formula");
+	}
+	else
+	{
+		errorFormula->SetError(formula, "");
+	}
 }
 };
 }
