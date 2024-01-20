@@ -6,7 +6,7 @@
 #include "Notation.hpp"
 #include "Operator.hpp"
 
-namespace Calculator
+namespace MathExprCalculator
 {
     class ConverterRPN : public MathExpression::IExprConverter<MathExpression::Notation::RPN>
     {
