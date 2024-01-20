@@ -67,8 +67,8 @@ namespace MathExprCalculator
         static_cast<char>(MathExpression::Operator::pow), 
         static_cast<char>(MathExpression::Operator::mul),  static_cast<char>(MathExpression::Operator::div),
         static_cast<char>(MathExpression::Operator::plus), static_cast<char>(MathExpression::Operator::minus),
-        static_cast<char>(MathExpression::Operator::left_parenthesis), static_cast<char>(MathExpression::Operator::right_parenthesis,
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0', '.')
+        static_cast<char>(MathExpression::Operator::left_parenthesis), static_cast<char>(MathExpression::Operator::right_parenthesis),
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0', '.'
         };
 
     private:
