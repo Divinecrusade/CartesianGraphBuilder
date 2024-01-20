@@ -138,6 +138,7 @@ namespace GUIApplication {
 			this->formula->Name = L"formula";
 			this->formula->Size = System::Drawing::Size(345, 20);
 			this->formula->TabIndex = 0;
+			this->formula->TextChanged += gcnew System::EventHandler(this, &MainForm::formula_TextChanged);
 			this->formula->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MainForm::formula_KeyPress);
 			// 
 			// errorFormula
@@ -172,6 +173,8 @@ private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::
 	}
 }
 private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	String^ system_str{ formula->Text };
 	std::string std_str{ };
 
