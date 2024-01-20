@@ -40,7 +40,9 @@ namespace MathExprCalculator
             for (size_t i{ 0 }; i != expr.length(); ++i)
             {
                 if (is_digit(expr[i]) || expr[i] == '.' ||
-                   (expr[i] == '-' && (i == 0 || (is_digit(expr[i + 1]) && !is_digit(expr[i - 1])))))
+                   (expr[i] == '-' && 
+                   (i == 0 || 
+                   (is_digit(expr[i + 1]) && !is_digit(expr[i - 1])))))
                 {
                     if (prev_char_is_operator)
                     {

@@ -23,16 +23,37 @@ namespace GUIApplication
         {
             static std::map<Constants, std::string> const constants_values{ {exponent, "2.718"} };
 
-            std::string arg_value_str{ std::to_string(arg_value) };
+            bool const arg_negative{ arg_value < 0 };
+
+            std::string const arg_value_str{ std::to_string(arg_value) };
             std::string processed_expr{ };
 
-            for (auto const& c : expr)
+            for (char const c : expr)
             {
                 switch (c)
                 {
-                    case argument: processed_expr += arg_value_str; break;
+                    case argument:
+                        if (arg_negative && processed_expr.length() >= 1 && processed_expr[processed_expr.length() - 1] == '-')
+                        {
+                            if (processed_expr.length() >= 2 && processed_expr[processed_expr.length() - 2] >= '0' && processed_expr[processed_expr.length() - 2] <= '9')
+                            {
+                                processed_expr[processed_expr.length() - 1] = '+';
+                                processed_expr += std::to_string(-arg_value);
+                            }
+                            else
+                            {
+                                processed_expr.erase(processed_expr.length() - 1, 1);
+                                processed_expr += std::to_string(-arg_value);
+                            }
+                        }
+                        else
+                        {
+                            processed_expr += arg_value_str; 
+                        }
+                        break;
                     case exponent: processed_expr += constants_values.at(exponent); break;
-                    default: processed_expr += c;
+                    default:
+                      processed_expr += c;
                 }
             }
 

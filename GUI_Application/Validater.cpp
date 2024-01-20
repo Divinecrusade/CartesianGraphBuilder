@@ -54,8 +54,9 @@ namespace GUIApplication
         bool prev_char_is_left_parenthesis{ false };
         bool prev_char_is_right_parenthesis{ false };
 
-        for (char const c : expr)
+        for (size_t i{ 0 }; i != expr.length(); ++i)
         {
+            char const c{ expr[i] };
             TokenType cur_char{ check_char(c) };
 
             switch (cur_char)
@@ -75,6 +76,7 @@ namespace GUIApplication
                 case math_operator:
 
                     if (prev_char_is_right_parenthesis) return false;
+
                     //return true;
 
                     break;
@@ -101,7 +103,6 @@ namespace GUIApplication
                 case MathExpression::Operator::mul:
                 case MathExpression::Operator::div:
                 case MathExpression::Operator::plus:
-                case MathExpression::Operator::minus:
 
                     switch (prev_char)
                     {
@@ -131,6 +132,42 @@ namespace GUIApplication
                         break;
                     }
 
+                    prev_char_is_left_parenthesis = prev_char_is_right_parenthesis = false;
+
+                    break;
+
+                case MathExpression::Operator::minus:
+
+                    switch (prev_char)
+                    {
+                    case nan:
+
+                        break;
+
+                    case number:
+
+                        //return true;
+
+                        break;
+
+                    case math_operator:
+
+                        if (expr[i - 1] == '-' || expr[i - 1] == '+') return false;
+                        else if (!(prev_char_is_right_parenthesis ||
+                              (i + 1 != expr.length() &&
+                              (check_char(expr[i + 1]) == number ||
+                               check_char(expr[i + 1]) == precalculator)))) return false;
+                        //else return true;
+
+                        break;
+
+                    case precalculator:
+
+                        //return true;
+
+                        break;
+                    }
+                    
                     prev_char_is_left_parenthesis = prev_char_is_right_parenthesis = false;
 
                     break;
@@ -187,7 +224,7 @@ namespace GUIApplication
 
                     case math_operator:
 
-                        return false;
+                        if (!prev_char_is_right_parenthesis) return false;
 
                         break;
 
