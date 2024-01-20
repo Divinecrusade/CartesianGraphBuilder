@@ -8,12 +8,11 @@
 
 namespace Calculator
 {
-    std::stack<double> ExecuterRPN::operands{ };
+    ExecuterRPN::ExecuterRPN(char del) : DELIMETER{ del } { }
 
     double ExecuterRPN::execute_expr_according_notation(std::queue<std::string> const& expr) const
     {
-        static constexpr char DELIMETER{ ' ' };
-
+        std::stack<double> operands{ };
         std::string expr_line{  };
 
         for (auto const& token : expr._Get_container())

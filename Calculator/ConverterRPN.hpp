@@ -12,7 +12,7 @@ namespace Calculator
     {
     public:
 
-        ConverterRPN() = default;
+        explicit ConverterRPN(char del = ' ');
         ConverterRPN(ConverterRPN const&) = delete;
         ConverterRPN(ConverterRPN&&) = delete;
 
@@ -22,12 +22,13 @@ namespace Calculator
         virtual std::queue<std::string> convert_expr_with_notation(std::string_view expr) const override;
 
     private:
+        
+        char const DELIMETER;
 
         static bool is_operator(std::string_view token);
         static MathExpression::Operator parse_operator(std::string_view token);
         static std::string to_string(MathExpression::Operator const& o);
 
-        static std::stack<MathExpression::Operator> operators;
         static std::map<MathExpression::Operator const, int const> const precedences;
         static std::map<MathExpression::Operator const, MathExpression::Associativity const> const associativities;
     };
