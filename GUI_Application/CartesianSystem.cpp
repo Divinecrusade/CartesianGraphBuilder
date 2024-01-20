@@ -42,7 +42,7 @@ namespace GUIApplication
     System::Drawing::Point CartesianSystem::local_coordinates_to_global(double x, double y)
     {
         System::Drawing::Point global(x_zero + x * pixels_in_unit_x, y_zero - y * pixels_in_unit_y);
-        return global.X > graph_area.Width + padding || global.X < 0 || global.Y > graph_area.Height + padding || global.Y < 0 ? INVALID : global;
+        return global.X > graph_area.Width + 2 * padding || global.X < 0 || global.Y > graph_area.Height + 2 * padding || global.Y < 0 ? INVALID : global;
     }
 
 
