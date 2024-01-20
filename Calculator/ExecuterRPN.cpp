@@ -127,6 +127,8 @@ namespace MathExprCalculator
 
                     break;
 
+                    case MathExpression::Operator::left_parenthesis:
+                    case MathExpression::Operator::right_parenthesis:
                     default:
 
                         throw std::exception{ "Bad RPN notation expression" };

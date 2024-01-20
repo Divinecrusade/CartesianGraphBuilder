@@ -196,13 +196,13 @@ namespace GUIApplication {
 
 		}
 #pragma endregion
-private: System::Void formula_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+private: System::Void formula_KeyPress(System::Object^, System::Windows::Forms::KeyPressEventArgs^ e) {
 	if (!Validater::validate(e->KeyChar))
 	{
 		e->Handled = true;
 	}
 }
-private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void buildPlot_Click(System::Object^, System::EventArgs^) {
 	if (errorFormula->GetError(formula)->Length != 0) return;
 
 	String^ system_str_expr{ formula->Text };
@@ -213,7 +213,7 @@ private: System::Void buildPlot_Click(System::Object^ sender, System::EventArgs^
 	CartesianSystem::Plot::set(std_str_expr);
 	graphArea->Invalidate();
 }
-private: System::Void formula_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void formula_TextChanged(System::Object^, System::EventArgs^) {
 	String^ system_str_expr{ formula->Text };
 	std::string std_str_expr{ };
 	
@@ -230,12 +230,12 @@ private: System::Void formula_TextChanged(System::Object^ sender, System::EventA
 		buildPlot->Enabled = true;
 	}
 }
-private: System::Void graphArea_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+private: System::Void graphArea_Paint(System::Object^, System::Windows::Forms::PaintEventArgs^ e) {
 	CartesianSystem::set(graphArea->Size, systemScale->Value);
 	CartesianSystem::draw(e->Graphics);
 	CartesianSystem::Plot::draw(e->Graphics);
 }
-private: System::Void systemScale_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void systemScale_ValueChanged(System::Object^, System::EventArgs^) {
 	graphArea->Invalidate();
 }
 };

@@ -9,14 +9,14 @@ namespace GUIApplication
     int CartesianSystem::min_y;
     int CartesianSystem::max_y;
     
-    double CartesianSystem::pixels_in_unit_x;
-    double CartesianSystem::pixels_in_unit_y;
+    float CartesianSystem::pixels_in_unit_x;
+    float CartesianSystem::pixels_in_unit_y;
     System::Drawing::Rectangle CartesianSystem::graph_area;
 
     int CartesianSystem::x_zero;
     int CartesianSystem::y_zero;
 
-    System::Drawing::Point const CartesianSystem::INVALID( -1, -1 );
+    System::Drawing::Point CartesianSystem::INVALID( -1, -1 );
 
     void CartesianSystem::set(System::Drawing::Size area, int scale)
     {
@@ -28,8 +28,8 @@ namespace GUIApplication
         min_y = base_min_y * scale;
         max_y = base_max_y * scale;
 
-        pixels_in_unit_x = double(graph_area.Width) / (std::abs(max_x - min_x));
-        pixels_in_unit_y = double(graph_area.Height) / (std::abs(max_y - min_y));
+        pixels_in_unit_x = static_cast<float>(graph_area.Width) / (std::abs(max_x - min_x));
+        pixels_in_unit_y = static_cast<float>(graph_area.Height) / (std::abs(max_y - min_y));
 
         x_zero = graph_area.Width / 2 + padding;
         y_zero = graph_area.Height / 2 + padding;
@@ -44,6 +44,7 @@ namespace GUIApplication
         gfx->Clear(System::Drawing::Color::White);
 
         System::Drawing::Pen^ blackPen = gcnew System::Drawing::Pen(System::Drawing::Color::Black);
+        System::Drawing::Brush^ blackBrush = System::Drawing::Brushes::Black;
         blackPen->Width = line_thickness;
 
         gfx->DrawLine(blackPen, graph_area.Left, y_zero, graph_area.Right, y_zero);
@@ -57,43 +58,43 @@ namespace GUIApplication
         static constexpr int y_axis_x_margin{ 5 };
         static constexpr int y_axis_y_margin{ -5 };
 
-        gfx->DrawString("x", fntWrite, System::Drawing::Brushes::Black, graph_area.Right + x_axis_x_margin, y_zero + x_axis_y_margin);
-        gfx->DrawString("y", fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, graph_area.Top + y_axis_y_margin);
+        gfx->DrawString("x", fntWrite, blackBrush, static_cast<float>(graph_area.Right + x_axis_x_margin), static_cast<float>(y_zero + x_axis_y_margin));
+        gfx->DrawString("y", fntWrite, blackBrush, static_cast<float>(x_zero + y_axis_x_margin), static_cast<float>(graph_area.Top + y_axis_y_margin));
 
         static constexpr int segment_halfwidth{ 4 };
 
         System::String^ s_zero{ "0" };
-        gfx->DrawString(s_zero, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero + x_axis_y_margin);
+        gfx->DrawString(s_zero, fntWrite, blackBrush, static_cast<float>(x_zero + y_axis_x_margin), static_cast<float>(y_zero + x_axis_y_margin));
 
 
         for (int x{ 1 }; x <= max_x - 1; ++x)
         {
             System::String^ str{ x.ToString() };
-            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero - segment_halfwidth);
-            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero + segment_halfwidth);
-            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + x * pixels_in_unit_x - y_axis_x_margin, y_zero + x_axis_y_margin);
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero), static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero - segment_halfwidth));
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero), static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero + segment_halfwidth));
+            gfx->DrawString(str, fntWrite, blackBrush, static_cast<float>(x_zero + x * pixels_in_unit_x - y_axis_x_margin), static_cast<float>(y_zero + x_axis_y_margin));
         }
         for (int x{ -1 }; x >= min_x + 1; --x)
         {
             System::String^ str{ x.ToString() };
-            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero - segment_halfwidth);
-            gfx->DrawLine(blackPen, x_zero + x * pixels_in_unit_x, y_zero, x_zero + x * pixels_in_unit_x, y_zero + segment_halfwidth);
-            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + x * pixels_in_unit_x - y_axis_x_margin, y_zero + x_axis_y_margin);
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero), static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero - segment_halfwidth));
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero), static_cast<float>(x_zero + x * pixels_in_unit_x), static_cast<float>(y_zero + segment_halfwidth));
+            gfx->DrawString(str, fntWrite, blackBrush, static_cast<float>(x_zero + x * pixels_in_unit_x - y_axis_x_margin), static_cast<float>(y_zero + x_axis_y_margin));
         }
 
         for (int y{ 1 }; y <= max_y - 1; ++y)
         {
             System::String^ str{ y.ToString() };
-            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero + segment_halfwidth, y_zero - y * pixels_in_unit_y);
-            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero - segment_halfwidth, y_zero - y * pixels_in_unit_y);
-            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero - y * pixels_in_unit_y + x_axis_x_margin);
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero), static_cast<float>(y_zero - y * pixels_in_unit_y), static_cast<float>(x_zero + segment_halfwidth), static_cast<float>(y_zero - y * pixels_in_unit_y));
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero), static_cast<float>(y_zero - y * pixels_in_unit_y), static_cast<float>(x_zero - segment_halfwidth), static_cast<float>(y_zero - y * pixels_in_unit_y));
+            gfx->DrawString(str, fntWrite, blackBrush, static_cast<float>(x_zero + y_axis_x_margin), static_cast<float>(y_zero - y * pixels_in_unit_y + x_axis_x_margin));
         }
         for (int y{ -1 }; y >= min_y + 1; --y)
         {
             System::String^ str{ y.ToString() };
-            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero + segment_halfwidth, y_zero - y * pixels_in_unit_y);
-            gfx->DrawLine(blackPen, x_zero, y_zero - y * pixels_in_unit_y, x_zero - segment_halfwidth, y_zero - y * pixels_in_unit_y);
-            gfx->DrawString(str, fntWrite, System::Drawing::Brushes::Black, x_zero + y_axis_x_margin, y_zero - y * pixels_in_unit_y + x_axis_x_margin);
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero), static_cast<float>(y_zero - y * pixels_in_unit_y), static_cast<float>(x_zero + segment_halfwidth), static_cast<float>(y_zero - y * pixels_in_unit_y));
+            gfx->DrawLine(blackPen, static_cast<float>(x_zero), static_cast<float>(y_zero - y * pixels_in_unit_y), static_cast<float>(x_zero - segment_halfwidth), static_cast<float>(y_zero - y * pixels_in_unit_y));
+            gfx->DrawString(str, fntWrite, blackBrush, static_cast<float>(x_zero + y_axis_x_margin), static_cast<float>(y_zero - y * pixels_in_unit_y + x_axis_x_margin));
         }
     }
 

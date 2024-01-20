@@ -3,7 +3,7 @@
 
 namespace GUIApplication
 {
-    Validater::TokenType Validater::check_char(char c)
+    Validater::TokenType Validater::check_char(wchar_t c)
     {
         bool calculator_symbol{ false };
         bool preprocessor_symbol{ false };
@@ -37,7 +37,7 @@ namespace GUIApplication
         {
             return precalculator;
         }
-        else if (c >= '0' && c <= '9')
+        else if (c >= L'0' && c <= L'9')
         {
             return number;
         }
@@ -289,7 +289,7 @@ namespace GUIApplication
         return true;
     }
 
-    bool Validater::validate(int key_code)
+    bool Validater::validate(wchar_t key_code)
     {
         if (key_code >= '!' && key_code <= '~')
         {

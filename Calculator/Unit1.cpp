@@ -12,10 +12,10 @@ int main()
     //MathExprCalculator::ConverterRPN converter{ };
     //MathExprCalculator::ExecuterRPN executer{ };
     
-    //std::string expr{ "5^2+4*2/(2-5)" };
+    std::string expr{ "5^2+4*2/(2-5)" };
     //std::string expr{ "1000--7" };
     //std::string expr{ "--7" };
-    std::string expr{ "1/0" };
+    //std::string expr{ "1/0" };
     //std::string expr{ "3" };
     //std::string expr{ "-3" };
     //std::string expr{ "-3+4*2/(1-5)" };

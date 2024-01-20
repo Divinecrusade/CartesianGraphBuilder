@@ -11,7 +11,7 @@ namespace GUIApplication
     {
     public:
 
-        static System::Drawing::Point const INVALID;
+        static System::Drawing::Point INVALID;
         
         static void set(System::Drawing::Size area, int scale);
         static void draw(System::Drawing::Graphics^ gfx);
@@ -35,8 +35,8 @@ namespace GUIApplication
         static int min_y;
         static int max_y;
 
-        static double pixels_in_unit_x;
-        static double pixels_in_unit_y;
+        static float pixels_in_unit_x;
+        static float pixels_in_unit_y;
         static System::Drawing::Rectangle graph_area;
 
         static int x_zero;
